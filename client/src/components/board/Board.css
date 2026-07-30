@@ -1,0 +1,54 @@
+:root {
+    --gridGap: 2%;
+
+}
+
+.main {
+    background: black;
+    display: grid;
+    width: 50vw;
+    aspect-ratio: 1/1;
+    grid-template-rows: repeat(10, 1fr);
+    grid-auto-rows: 1fr;
+    align-self: center;
+    gap: var(--gridGap);
+    box-sizing: border-box;
+    margin-top: 10px;
+    padding: 6%;
+    border-radius: 10px 80px;
+    margin: 0 auto;
+}
+.row {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-auto-columns: 1fr;
+    gap: var(--gridGap);
+    box-sizing: border-box;
+}
+.cell {
+    background: gray;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: white;
+}
+
+.cell:hover {
+    cursor: pointer;
+    scale: 1.05;
+    transition: .2s ease-in-out;
+    border: 1px solid white;
+}
+
+
+.blank {
+    background: rgba(100, 100, 100, .9);
+    border: 1px inset white;
+    border-radius: 5px;
+}
+.bomb {
+    background: red;
+}
