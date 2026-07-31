@@ -10,7 +10,7 @@ function App() {
     <div className="body">
      <Router >
       <header>
-        <Link to="/"><h1>MineSweeper</h1></Link>
+        <Link to="/" className="links"><h1>MineSweeper</h1></Link>
         <h3>By Augustine Inc!</h3>
       <h3>Select a Difficulty: </h3>
       </header>
@@ -22,8 +22,7 @@ function App() {
             On each turn, the user clicks on a square to uncover it. If the square:
             </h2>
             <ol>
-              <li>
-                If the selected tile contains a mine, the user loses, and the game is over!
+              <li>If the selected tile contains a mine, the user loses, and the game is over!
               </li>
               <li>
                 If the selected tile is adjacent to a mine, the square displays the total number of mines in the 8 squares around it.

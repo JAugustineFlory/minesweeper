@@ -14,5 +14,5 @@ export default defineConfig({
     setupFiles: "./src/setupTests.js",
   },
   server: { watch: { usePolling: true } },
-  base: "/minesweeper.github.io/",
+  base: "/minesweeper/",
 })
