@@ -23,7 +23,7 @@ function App() {
             </h2>
             <ol>
               <li>
-                1. If the selected tile contains a mine, the user loses, and the game is over!
+                If the selected tile contains a mine, the user loses, and the game is over!
               </li>
               <li>
                 If the selected tile is adjacent to a mine, the square displays the total number of mines in the 8 squares around it.
