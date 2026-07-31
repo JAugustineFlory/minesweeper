@@ -10,11 +10,11 @@ function App() {
     <div className="body">
      <Router >
       <header>
-        <Link to="/minesweeper/" className="links"><h1>MineSweeper</h1></Link>
+        <Link to="/minesweeper/" className="links"><h1 className="link-btn">MineSweeper</h1></Link>
         <h3>By Augustine Inc!</h3>
       <h3>Select a Difficulty: </h3>
       </header>
-      <Link to="minesweeper/easy" onClick={() => setDifficulty('easy')} className="links">easy</Link>
+      <Link to="minesweeper/easy" onClick={() => setDifficulty('easy')} className="links link-btn">easy</Link>
       <Routes>
         <Route path="/minesweeper/" element={
           <div className="landingPage">
@@ -24,12 +24,8 @@ function App() {
             <ol>
               <li>If the selected tile contains a mine, the user loses, and the game is over!
               </li>
-              <li>
-                If the selected tile is adjacent to a mine, the square displays the total number of mines in the 8 squares around it.
-              </li>
-              <li>
-                If the selected tile is not adjacent to a mine, the square is blank and should behave as if the 8 adjacent squares were also clicked. 
-                - For each of those squares, their neighboring squares continue to be revealed in each direction (i.e., this step is applied recursively to all neighboring squares) until the edge of the board is reached or until a square is reached that is adjacent to a mine, in which case the previous rule applies.
+              <li>If the selected tile is adjacent to a mine, the square displays the total number of mines in the 8 squares around it.</li>
+              <li>If the selected tile is not adjacent to a mine, the square is blank and should behave as if the 8 adjacent squares were also clicked. For each of those squares, their neighboring squares continue to be revealed in each direction (i.e., this step is applied recursively to all neighboring squares) until the edge of the board is reached or until a square is reached that is adjacent to a mine, in which case the previous rule applies.
               </li>
               <li>The user wins when they uncover all squares that don’t have mines.<p>
                 *This rule winds up uncovering large areas of the board in one turn. This helps speed up gameplay.*

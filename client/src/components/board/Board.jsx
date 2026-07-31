@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Board.css';
 
 
@@ -59,7 +59,21 @@ function adjacency(boardArray, bombCells, gridSize) {
 
 
 function Board(props) {
-    const [board, setBoard] = useState(() => generate(props.data.difficulty));
+    const [board, setBoard] = useState(() => {
+        const saved = localStorage.getItem("minesweeper-board");
+        
+        return saved ? JSON.parse(saved) : generate(props.data.difficulty);
+    });
+    
+    
+    useEffect(()  => {
+        localStorage.setItem("minesweeper-board", JSON.stringify(board));
+    }, [board])
+    
+    const handleRetry = () => {
+        localStorage.removeItem("minesweeper-board");
+        setBoard(generate(props.data.difficulty))
+    }
 
     const handleClick = (clickedRow, clickedCol) => {
         setBoard(prevBoard =>{
@@ -81,21 +95,25 @@ function Board(props) {
         });
     };
     
+
     return (
         <div className="main">
-            {board.map((row, rowIndex) => (
-                <div className="row" key={rowIndex}>
-                    {row.map((cell) => (
-                        <div
-                        key={`${cell.row}-${cell.col}`}
-                        className={`cell ${cell.isRevealed ? "revealed" : "unclicked"} ${cell.isBomb && cell.isRevealed ? "bomb" : ""} ${cell.isRevealed && cell.adjacentCount == 0 ? "blank" : ""}`}
-                        onClick={() => {handleClick(cell.row, cell.col, cell.isBomb)}}
-                        >
-                            {cell.isRevealed && !cell.isBomb && cell.adjacentCount > 0 ? (cell.adjacentCount) : null}
-                        </div>
-                    ))}
-                </div>
-            ))}
+            <button href="" className="retry link-btn" onClick={handleRetry}>Retry</button>
+            <div className="board">
+                {board.map((row, rowIndex) => (
+                    <div className="row" key={rowIndex}>
+                        {row.map((cell) => (
+                            <div
+                            key={`${cell.row}-${cell.col}`}
+                            className={`cell ${cell.isRevealed ? "revealed" : "unclicked"} ${cell.isBomb && cell.isRevealed ? "bomb" : ""} ${cell.isRevealed && cell.adjacentCount == 0 ? "blank" : ""}`}
+                            onClick={() => {handleClick(cell.row, cell.col, cell.isBomb)}}
+                            >
+                                {cell.isRevealed && !cell.isBomb && cell.adjacentCount > 0 ? (cell.adjacentCount).toString() : null}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
