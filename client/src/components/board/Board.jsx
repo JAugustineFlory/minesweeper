@@ -91,7 +91,7 @@ function Board(props) {
                         className={`cell ${cell.isRevealed ? "revealed" : "unclicked"} ${cell.isBomb && cell.isRevealed ? "bomb" : ""} ${cell.isRevealed && cell.adjacentCount == 0 ? "blank" : ""}`}
                         onClick={() => {handleClick(cell.row, cell.col, cell.isBomb)}}
                         >
-                            {cell.isRevealed && !cell.isBomb && cell.adjacentCount > 0 ? cell.adjacentCount : null}
+                            {cell.isRevealed && !cell.isBomb && cell.adjacentCount > 0 ? (cell.adjacentCount) : null}
                         </div>
                     ))}
                 </div>
