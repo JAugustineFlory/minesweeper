@@ -57,47 +57,89 @@ function adjacency(boardArray, bombCells, gridSize) {
     return boardArray;
 }
 
+//Handles the whole "all nearby empty tiles reveal" thing
+function revealBlank( board, row, col, gridSize) {
+    const cell = board[row][col];
+    //Safety catch
+    if (cell.isRevealed || cell.isBomb) return;
+    
+    cell.isRevealed = true;
 
+
+    if (cell.adjacentCount === 0) {
+        //Same double-iteration pattern used above
+        //iterate through row
+        for (let r = row - 1; r <= row + 1; r++) {
+            if (r < 0 || r >= gridSize) continue;
+            //iterate through columns
+            for (let c = col - 1; c <= col + 1; c++) {
+                if (c < 0 || c >= gridSize) continue;
+                if (r === row && c === col) continue;
+                revealBlank(board, r, c, gridSize);
+            }
+        }
+    }
+}
+
+function checkWin(board) {
+    return board.every(row =>
+        row.every(cell => cell.isBomb || cell.isRevealed)
+    );
+}
+
+//generates board
 function Board(props) {
+    const [won, setWon] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
     const [board, setBoard] = useState(() => {
         const saved = localStorage.getItem("minesweeper-board");
         
         return saved ? JSON.parse(saved) : generate(props.data.difficulty);
     });
-    
-    
+
+
+    // When board updates, save
     useEffect(()  => {
         localStorage.setItem("minesweeper-board", JSON.stringify(board));
     }, [board])
+    //When retry button is pressed, removes our previous save and generate()s and new board
+    
     
     const handleRetry = () => {
         localStorage.removeItem("minesweeper-board");
-        setBoard(generate(props.data.difficulty))
+        setBoard(generate(props.data.difficulty));
+        setGameOver(false);
+        setWon(false);
     }
 
     const handleClick = (clickedRow, clickedCol) => {
-        setBoard(prevBoard =>{
-            const clickedCell = prevBoard[clickedRow][clickedCol];
+        if (gameOver || won) return;
+        const clickedCell = board[clickedRow][clickedCol];
 
-            if (clickedCell.isBomb) {
-                return prevBoard.map(row =>
-                    row.map(cell => ({ ...cell, isRevealed: true }))
-                );
-            }
-
-            return prevBoard.map(row => 
-                row.map(cell => 
-                    cell.row === clickedRow && cell.col === clickedCol ?
-                     { ...cell, isRevealed: true }
-                     : cell
+        if (clickedCell.isBomb) {
+            setGameOver(true);
+            setBoard(prevBoard =>
+                prevBoard.map(row =>
+                    row.map(cell => ({ ...cell, isRevealed: true}))
                 )
             );
-        });
+            return;
+        }
+
+        const newBoard = structuredClone(board);
+        revealBlank(newBoard, clickedRow, clickedCol, newBoard.length);
+        setBoard(newBoard);
+
+        if (checkWin(newBoard)) {
+            setWon(true);
+        }
     };
     
 
     return (
         <div className="main">
+            {gameOver && <div className="failedMessage">You Failed!</div>}
+            {won && <div className="failedMessage">You Won!</div>}
             <button href="" className="retry link-btn" onClick={handleRetry}>Retry</button>
             <div className="board">
                 {board.map((row, rowIndex) => (
