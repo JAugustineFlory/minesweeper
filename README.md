@@ -21,21 +21,15 @@ On each turn, the user clicks on a square to uncover it. If the square:
 **4. The user wins when they uncover all squares that don’t have mines.**
 
 ----------
-## Current Version: 0.0.0 | Scaffolding! update
 
-### Features: 
-- *None*
-- **Look out for more in the next update!**
-
-## Next Version: 0.1.0 | I can play! update
+## Current Version: 0.1.0 | I can play! update
 
 ### Upcoming Versions & Features:
 #### 0.1.0
 ##### Adds:
-- **Beginner Mode**
+- **Easy Mode**
     - 10 x 10 grid
     - Number of bombs remaining (10)
-    - Timer to track score
     - Button to reset progress
     - Clicking tiles reveals what's underneath
         - Bombs placed randomly
@@ -46,10 +40,19 @@ On each turn, the user clicks on a square to uncover it. If the square:
 
 
 
-#### 0.1.1
+#### Next Version: 0.1.1 | 
 ##### Adds:
--
+    - Timer to track score
+    -
 ##### Fixes:
--
+    -
 -------
 ## Road Map
+-------
+
+## Changelog:
+### Previous Version: 0.1.0 | Scaffolding! update
+
+#### Features: 
+- *None*
+- **Look out for more in the next update!**
